@@ -10,34 +10,35 @@
 
 - **Python 3.6+** — no additional packages required for the base client
 - **TORCS** with the **SCR (Simulated Car Racing)** patch installed
-  - Platform: **Linux recommended** (auto-relaunch uses `pkill torcs`)
-  - On Windows/macOS the client connects and drives normally; auto-relaunch on connection failure is disabled (a human-readable message is printed instead)
-- **`xte`** (X11 tool-emulator) — used by `autostart.sh` to navigate the TORCS GUI and start the race; not required if the race is started manually
 - `matplotlib` — **optional**; if installed, `race_analyzer.py` saves a telemetry PNG alongside the CSV on shutdown; silently skipped if absent
+
+> **Note on auto-relaunch:** `finale.py` calls `pkill torcs` only on Linux. On Windows, if the connection times out you will see a message to restart TORCS manually — the client itself continues to retry.
 
 ---
 
 ## Run Command
 
-```bash
-# 1. Start TORCS in SCR mode (Linux)
-torcs -nofuel -nodamage -nolaptime &
-sh autostart.sh          # navigates the TORCS GUI to start the practice race
+```cmd
+:: 1. Start TORCS manually
+::    Launch TORCS, then navigate to: Quick Race > Race > SCR Server > Start Race
 
-# 2. In a separate terminal, run the client
+:: 2. Open a second Command Prompt window and run the client
 python finale.py
 
-# With explicit port (required in race / competition mode)
+:: With explicit port (required in competition / race mode)
 python finale.py --port 3001
 
-# With debug telemetry printed each tick
+:: With debug telemetry printed each tick
 python finale.py --debug
 
-# Limit to ~1 lap on Corkscrew (~1 600 steps)
+:: Limit steps (e.g. ~1 lap on Corkscrew)
 python finale.py --steps 2000
+
+:: All options
+python finale.py --host localhost --port 3001 --id SCR --steps 500000 --episodes 1 --stage 3 --debug
 ```
 
-TORCS listens on **UDP port 3001** by default.  
+TORCS listens on **UDP port 3001** by default.
 The port must be passed via `--port` / `-p`; it is **never hardcoded** (competition rule).
 
 ---
@@ -78,3 +79,6 @@ The port must be passed via `--port` / `-p`; it is **never hardcoded** (competit
 | `Demonstration viddeo.mp4` | Demonstration video |
 | `README.md` | This file |
 | `SUBMISSION.md` | Description, enhancements and Bob-use notes |
+
+
+bos dah el kalam
